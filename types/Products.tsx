@@ -20,3 +20,9 @@ export interface Product {
 	title: string;
 	price: number;
 }
+
+export interface ShoppingProducts {
+	shoppingProducts: {
+		shoppingProducts: Product[];
+	};
+}

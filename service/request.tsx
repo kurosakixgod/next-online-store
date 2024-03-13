@@ -1,9 +1,3 @@
-import {
-	productsFetched,
-	productsFetching,
-	productsFetchingError,
-} from "@/slices/productsSlices";
-
 export const getAllProducts = async () => {
 	const response = await fetch("https://fakestoreapi.com/products");
 	return response.json();
@@ -16,7 +10,7 @@ export const getSingleProduct = async (id: number) => {
 
 export const getLimitProducts = async (limit: number) => {
 	const response = await fetch(
-		`https://fakestoreapi.com/products?limit=${limit}`
+		`https://fakestoreapi.com/products?page=3&limit=${limit}`
 	);
 	return response.json();
 };

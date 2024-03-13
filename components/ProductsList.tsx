@@ -11,7 +11,8 @@ import { useSelector } from "react-redux";
 import { Dispatch } from "@reduxjs/toolkit";
 import ProductCard from "./ProductCard";
 import { Button } from "./ui/button";
-import { Products } from "@/types/Products";
+import { Products, Product } from "@/types/Products";
+import { createShoppingProduct } from "@/slices/shoppingProductsSlice";
 
 const fetchLimitProducts = (dispatch: Dispatch, limit: number) => {
 	productsFetching();
@@ -21,6 +22,8 @@ const fetchLimitProducts = (dispatch: Dispatch, limit: number) => {
 };
 
 const ProductsList = () => {
+	console.log("render");
+
 	const { products, loading, productsSortingStatus } = useSelector(
 		(state: Products) => state.products
 	);
@@ -31,11 +34,19 @@ const ProductsList = () => {
 		fetchLimitProducts(dispatch, 6);
 	}, []);
 
+	const addProduct = (product: Product) => {
+		dispatch(createShoppingProduct(product));
+	};
+
 	const sortedProducts = useMemo(() => {
 		const productsCopied = products.slice();
 		switch (productsSortingStatus) {
 			case "price":
 				return productsCopied.toSorted((a, b) => a.price - b.price);
+			case "rate":
+				return productsCopied.toSorted(
+					(a, b) => a.rating.rate - b.rating.rate
+				);
 			default:
 				return productsCopied.toSorted((a, b) => {
 					if (a.title < b.title) {
@@ -54,7 +65,13 @@ const ProductsList = () => {
 	} else if (loading === "error") return <h1>erorr...</h1>;
 
 	const elements = sortedProducts.map((product) => {
-		return <ProductCard key={product.id} {...product} />;
+		return (
+			<ProductCard
+				addProduct={addProduct}
+				key={product.id}
+				{...product}
+			/>
+		);
 	});
 	return (
 		<>

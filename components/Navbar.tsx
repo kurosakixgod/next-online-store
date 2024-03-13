@@ -1,5 +1,6 @@
 import Link from "next/link";
 import Logo from "./Logo";
+import Counter from "./Counter";
 
 const Navbar = () => {
 	return (
@@ -14,7 +15,8 @@ const Navbar = () => {
 				<li>
 					<Link href="/products">Products</Link>
 				</li>
-				<li>
+				<li className="relative">
+					<Counter className="absolute top-[-10px] right-[-18px]" />
 					<Link href="/shopping-cart">Shoping Cart</Link>
 				</li>
 			</ul>
