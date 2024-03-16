@@ -1,5 +1,8 @@
 "use client";
-import { getLimitProducts } from "@/service/request";
+import {
+	getLimitProducts,
+	getLimitTransformedProducts,
+} from "@/service/request";
 import { useEffect, useMemo } from "react";
 import {
 	productsFetched,
@@ -16,7 +19,7 @@ import { createShoppingProduct } from "@/slices/shoppingProductsSlice";
 
 const fetchLimitProducts = (dispatch: Dispatch, limit: number) => {
 	productsFetching();
-	getLimitProducts(limit)
+	getLimitTransformedProducts(limit)
 		.then((data) => dispatch(productsFetched(data)))
 		.catch(() => dispatch(productsFetchingError()));
 };

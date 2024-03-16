@@ -1,31 +1,24 @@
 "use client";
 import { useSelector } from "react-redux";
-import { Product } from "@/types/Products";
-import Image from "next/image";
 import { ShoppingProducts } from "@/types/Products";
+import ShoppingProduct from "./ShoppingProduct";
 
 const ShoppingProductsList = () => {
 	const { shoppingProducts } = useSelector(
 		(state: ShoppingProducts) => state.shoppingProducts
 	);
 
-	const elements = shoppingProducts.map((item) => {
+	const elements = shoppingProducts.map((item, i) => {
 		return (
-			<li
-				className="flex gap-3 border-2 border-black h-[200px] items-center p-5"
-				key={item.id}
-			>
-				<Image
-					src={item.image}
-					height={80}
-					width={80}
-					alt={item.title}
-				/>
-				<div>{item.title}</div>
-			</li>
+			<>
+				<ShoppingProduct key={item.id} i={i} {...item} />
+				{i !== shoppingProducts.length - 1 ? (
+					<div className="w-3/4 h-[1px] bg-black"></div>
+				) : null}
+			</>
 		);
 	});
-	return <ul>{elements}</ul>;
+	return <ul className="bg-white rounded-sm p-[30px]">{elements}</ul>;
 };
 
 export default ShoppingProductsList;

@@ -24,5 +24,6 @@ export interface Product {
 export interface ShoppingProducts {
 	shoppingProducts: {
 		shoppingProducts: Product[];
+		totalPrice: number;
 	};
 }

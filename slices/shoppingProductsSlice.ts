@@ -3,10 +3,12 @@ import { Product } from "@/types/Products";
 
 interface ShoppingCartState {
 	shoppingProducts: Product[];
+	totalPrice: number;
 }
 
 const initialState: ShoppingCartState = {
 	shoppingProducts: [],
+	totalPrice: 0,
 };
 
 const shoppingProductsSlice = createSlice({
@@ -21,10 +23,17 @@ const shoppingProductsSlice = createSlice({
 				(item) => item.id !== action.payload
 			);
 		},
+		changeTotalPrice: (state, action) => {
+			state.totalPrice += action.payload;
+		},
 	},
 });
 
 const { reducer, actions } = shoppingProductsSlice;
-export const { createShoppingProduct, deleteShoppingProduct } = actions;
+export const {
+	createShoppingProduct,
+	deleteShoppingProduct,
+	changeTotalPrice,
+} = actions;
 
 export default reducer;

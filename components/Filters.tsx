@@ -18,7 +18,7 @@ const Filters = () => {
 				defaultValue="alphabet"
 				onValueChange={(value) => dispatch(setSortingStatus(value))}
 			>
-				<SelectTrigger>
+				<SelectTrigger className="bg-white">
 					<SelectValue placeholder="By alphabet" />
 				</SelectTrigger>
 				<SelectContent>
