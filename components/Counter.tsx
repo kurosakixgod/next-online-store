@@ -8,7 +8,7 @@ interface CounterProps {
 
 const Counter = (props: CounterProps) => {
 	const { shoppingProducts } = useSelector(
-		(state: ShoppingProducts) => state.shoppingProducts
+		(state: ShoppingProducts) => state.shoppingProducts,
 	);
 
 	if (shoppingProducts.length) {

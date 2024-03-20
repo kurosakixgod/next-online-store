@@ -1,8 +1,5 @@
 "use client";
-import {
-	getLimitProducts,
-	getLimitTransformedProducts,
-} from "@/service/request";
+import { getLimitTransformedProducts } from "@/service/request";
 import { useEffect, useMemo } from "react";
 import {
 	productsFetched,
@@ -14,7 +11,7 @@ import { useSelector } from "react-redux";
 import { Dispatch } from "@reduxjs/toolkit";
 import ProductCard from "./ProductCard";
 import { Button } from "./ui/button";
-import { Products, Product } from "@/types/Products";
+import { Products, Product, ShoppingProducts } from "@/types/Products";
 import { createShoppingProduct } from "@/slices/shoppingProductsSlice";
 
 const fetchLimitProducts = (dispatch: Dispatch, limit: number) => {
@@ -28,7 +25,10 @@ const ProductsList = () => {
 	console.log("render");
 
 	const { products, loading, productsSortingStatus } = useSelector(
-		(state: Products) => state.products
+		(state: Products) => state.products,
+	);
+	const { shoppingProducts } = useSelector(
+		(state: ShoppingProducts) => state.shoppingProducts,
 	);
 
 	const dispatch = useDispatch();
@@ -38,7 +38,9 @@ const ProductsList = () => {
 	}, []);
 
 	const addProduct = (product: Product) => {
-		dispatch(createShoppingProduct(product));
+		if (!shoppingProducts.some((item) => item.id === product.id)) {
+			dispatch(createShoppingProduct(product));
+		}
 	};
 
 	const sortedProducts = useMemo(() => {
@@ -48,7 +50,7 @@ const ProductsList = () => {
 				return productsCopied.toSorted((a, b) => a.price - b.price);
 			case "rate":
 				return productsCopied.toSorted(
-					(a, b) => a.rating.rate - b.rating.rate
+					(a, b) => a.rating.rate - b.rating.rate,
 				);
 			default:
 				return productsCopied.toSorted((a, b) => {
@@ -73,6 +75,7 @@ const ProductsList = () => {
 				addProduct={addProduct}
 				key={product.id}
 				{...product}
+				shoppingProducts={shoppingProducts}
 			/>
 		);
 	});

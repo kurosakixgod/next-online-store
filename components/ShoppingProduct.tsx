@@ -3,7 +3,7 @@ import Image from "next/image";
 import Plus from "./icons/Plus";
 import Minus from "./icons/Minus";
 import { Product } from "@/types/Products";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import {
 	changeTotalPrice,
@@ -16,26 +16,31 @@ interface Props extends Product {
 }
 
 const ShoppingProduct = ({ i, image, id, price, title }: Props) => {
-	const [counter, setCounter] = useState(0);
-	const [curSum, setCurSum] = useState(0);
 	const dispatch = useDispatch<any>();
+	const localStorageData = localStorage.getItem(`counter-${id}`) as string;
 
+	const [counter, setCounter] = useState(+localStorageData);
 	const decCount = () => {
 		if (counter) {
 			setCounter((counter) => counter - 1);
-			setCurSum(curSum - price);
-			dispatch(changeTotalPrice(-price));
+			let curSum = 0;
+			dispatch(changeTotalPrice(curSum - price));
 		}
 	};
 
+	useEffect(() => {
+		localStorage.setItem(`counter-${id}`, `${counter}`);
+	}, [counter]);
+
 	const incCount = () => {
 		setCounter((counter) => counter + 1);
-		setCurSum(curSum + price);
-		dispatch(changeTotalPrice(price));
+		let curSum = 0;
+		dispatch(changeTotalPrice(curSum + price));
 	};
 
 	const deleteProduct = (id: number) => {
 		dispatch(deleteShoppingProduct(id));
+		localStorage.removeItem(`counter-${id}`);
 	};
 
 	const clearPrice = () => {
@@ -44,19 +49,25 @@ const ShoppingProduct = ({ i, image, id, price, title }: Props) => {
 
 	return (
 		<li
-			className="flex gap-3 h-[200px] items-center p-5 font-semibold"
+			className="flex gap-[20px] h-[200px] items-center p-5 font-semibold relative"
 			key={id}
 		>
 			{i + 1}
 			<Image src={image} height={80} width={80} alt={title} />
-			<div>{title}</div>
-			<div className="flex items-center justify-center gap-6">
-				<Minus decCount={decCount} />
-				{counter}
-				<Plus incCount={incCount} />
-				{`${price}$`}
+			<div className="	max-w-[400px] text-xl">{title}</div>
+			<div className="flex items-center gap-[20px] absolute right-0">
+				<div className="flex items-center justify-center gap-[25px] ">
+					<Minus decCount={decCount} />
+					{counter}
+					<Plus incCount={incCount} />
+					{`${price}$`}
+				</div>
+				<Cross
+					clearPrice={clearPrice}
+					onDelete={deleteProduct}
+					id={id}
+				/>
 			</div>
-			<Cross clearPrice={clearPrice} onDelete={deleteProduct} id={id} />
 		</li>
 	);
 };

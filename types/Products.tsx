@@ -21,9 +21,13 @@ export interface Product {
 	price: number;
 }
 
+export interface ShoppingProduct extends Product {
+	counter: number;
+}
+
 export interface ShoppingProducts {
 	shoppingProducts: {
-		shoppingProducts: Product[];
+		shoppingProducts: ShoppingProduct[];
 		totalPrice: number;
 	};
 }

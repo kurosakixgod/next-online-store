@@ -1,8 +1,8 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { Product } from "@/types/Products";
+import { ShoppingProduct } from "@/types/Products";
 
 interface ShoppingCartState {
-	shoppingProducts: Product[];
+	shoppingProducts: ShoppingProduct[];
 	totalPrice: number;
 }
 
@@ -20,11 +20,17 @@ const shoppingProductsSlice = createSlice({
 		},
 		deleteShoppingProduct: (state, action) => {
 			state.shoppingProducts = state.shoppingProducts.filter(
-				(item) => item.id !== action.payload
+				(item) => item.id !== action.payload,
 			);
 		},
 		changeTotalPrice: (state, action) => {
 			state.totalPrice += action.payload;
+		},
+		setTotalPrice: (state, action) => {
+			state.totalPrice = action.payload;
+		},
+		setShoppingProducts: (state, action) => {
+			state.shoppingProducts = action.payload;
 		},
 	},
 });
@@ -34,6 +40,7 @@ export const {
 	createShoppingProduct,
 	deleteShoppingProduct,
 	changeTotalPrice,
+	setTotalPrice,
 } = actions;
 
 export default reducer;
