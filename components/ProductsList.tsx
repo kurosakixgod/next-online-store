@@ -13,6 +13,19 @@ import ProductCard from "./ProductCard";
 import { Button } from "./ui/button";
 import { Products, Product, ShoppingProducts } from "@/types/Products";
 import { createShoppingProduct } from "@/slices/shoppingProductsSlice";
+import { motion } from "framer-motion";
+
+const productsVariants = {
+	hidden: {
+		opacity: 0,
+	},
+	visible: (i: number) => ({
+		opacity: 1,
+		transition: {
+			delay: (i % 6) * 0.1,
+		},
+	}),
+};
 
 const fetchLimitProducts = (dispatch: Dispatch, limit: number) => {
 	productsFetching();
@@ -46,13 +59,7 @@ const ProductsList = () => {
 	const sortedProducts = useMemo(() => {
 		const productsCopied = products.slice();
 		switch (productsSortingStatus) {
-			case "price":
-				return productsCopied.toSorted((a, b) => a.price - b.price);
-			case "rate":
-				return productsCopied.toSorted(
-					(a, b) => a.rating.rate - b.rating.rate,
-				);
-			default:
+			case "alphabet":
 				return productsCopied.toSorted((a, b) => {
 					if (a.title < b.title) {
 						return -1;
@@ -62,6 +69,14 @@ const ProductsList = () => {
 					}
 					return 0;
 				});
+			case "price":
+				return productsCopied.toSorted((a, b) => a.price - b.price);
+			case "rate":
+				return productsCopied.toSorted(
+					(a, b) => a.rating.rate - b.rating.rate,
+				);
+			default:
+				return productsCopied;
 		}
 	}, [products, productsSortingStatus]);
 
@@ -69,14 +84,21 @@ const ProductsList = () => {
 		return <h1>Loading...</h1>;
 	} else if (loading === "error") return <h1>erorr...</h1>;
 
-	const elements = sortedProducts.map((product) => {
+	const elements = sortedProducts.map((product, i) => {
 		return (
-			<ProductCard
-				addProduct={addProduct}
+			<motion.div
+				variants={productsVariants}
+				initial="hidden"
+				animate="visible"
+				custom={i}
 				key={product.id}
-				{...product}
-				shoppingProducts={shoppingProducts}
-			/>
+			>
+				<ProductCard
+					addProduct={addProduct}
+					{...product}
+					shoppingProducts={shoppingProducts}
+				/>
+			</motion.div>
 		);
 	});
 	return (

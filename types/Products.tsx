@@ -1,4 +1,4 @@
-export type Statuses = "alphabet" | "price" | "rate";
+export type Statuses = "alphabet" | "price" | "rate" | "none";
 
 export interface Products {
 	products: {

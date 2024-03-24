@@ -18,7 +18,7 @@ const ProductCard = (product: CardProps) => {
 	const { title, addProduct, rating, image, price, shoppingProducts } =
 		product;
 	return (
-		<Card className="mx-auto my-0 w-[300px] h-[450px] relative p-5 rounded-3xl border-2 border-solid">
+		<Card className="mx-auto my-0 w-[300px] h-[450px] relative p-5 rounded-3xl shadow-[10px_40px_50px_0_rgba(229,233,246,0)]">
 			<div className="flex items-center">
 				<p className="font-bold">{rating.rate}</p>
 				<Star />

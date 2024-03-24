@@ -2,6 +2,7 @@
 import { useSelector } from "react-redux";
 import { ShoppingProducts } from "@/types/Products";
 import ShoppingProduct from "./ShoppingProduct";
+import { motion } from "framer-motion";
 
 const ShoppingProductsList = () => {
 	const { shoppingProducts } = useSelector(

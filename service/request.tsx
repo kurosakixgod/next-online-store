@@ -11,7 +11,12 @@ export const getSingleProduct = async (id: number) => {
 
 export const getLimitProducts = async (limit: number) => {
 	const response = await fetch(
-		`https://fakestoreapi.com/products?page=3&limit=${limit}`
+		`https://fakestoreapi.com/products?page=3&limit=${limit}`,
+		{
+			next: {
+				revalidate: 120,
+			},
+		},
 	);
 	return response.json();
 };

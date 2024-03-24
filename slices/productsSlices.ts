@@ -11,7 +11,7 @@ interface StateProducts {
 
 const initialState: StateProducts = {
 	products: [],
-	productsSortingStatus: "alphabet",
+	productsSortingStatus: "none",
 	loading: "idle",
 };
 
