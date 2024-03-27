@@ -1,3 +1,4 @@
+"use client";
 import Image from "next/image";
 import Star from "./icons/Star";
 import { Button } from "./ui/button";
@@ -8,6 +9,7 @@ import {
 	CardFooter,
 	CardHeader,
 } from "@/components/ui/card";
+import Link from "next/link";
 
 interface CardProps extends Product {
 	addProduct: (product: Product) => void;
@@ -15,13 +17,16 @@ interface CardProps extends Product {
 }
 
 const ProductCard = (product: CardProps) => {
-	const { title, addProduct, rating, image, price, shoppingProducts } =
+	const { title, addProduct, rating, image, price, shoppingProducts, id } =
 		product;
 	return (
 		<Card className="mx-auto my-0 w-[300px] h-[450px] relative p-5 rounded-3xl shadow-[10px_40px_50px_0_rgba(229,233,246,0)]">
 			<div className="flex items-center">
 				<p className="font-bold">{rating.rate}</p>
 				<Star />
+				<Link className="ml-auto" href={`/products/${id}`}>
+					<Button variant="ghost">More</Button>
+				</Link>
 			</div>
 			<CardHeader>
 				<Image

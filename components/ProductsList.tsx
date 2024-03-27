@@ -103,9 +103,9 @@ const ProductsList = () => {
 	});
 	return (
 		<>
-			<div className="grid grid-cols-3 place-content-center gap-[20px]">
+			<ul className="grid grid-cols-3 place-content-center gap-[20px]">
 				{elements}
-			</div>
+			</ul>
 			<Button
 				className="block mx-auto my-0 mt-[30px]"
 				onClick={() =>

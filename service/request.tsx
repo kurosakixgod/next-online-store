@@ -4,7 +4,7 @@ export const getAllProducts = async () => {
 	return response.json();
 };
 
-export const getSingleProduct = async (id: number) => {
+export const getSingleProduct = async (id: string) => {
 	const response = await fetch(`https://fakestoreapi.com/products/${id}`);
 	return response.json();
 };

@@ -2,15 +2,11 @@
 import { useSelector } from "react-redux";
 import { ShoppingProducts } from "@/types/Products";
 import ShoppingProduct from "./ShoppingProduct";
-import { motion } from "framer-motion";
 
 const ShoppingProductsList = () => {
 	const { shoppingProducts } = useSelector(
 		(state: ShoppingProducts) => state.shoppingProducts,
 	);
-
-	const a = shoppingProducts.find((item) => item.id === 5);
-	console.log(a);
 
 	const elements = shoppingProducts.map((item, i) => {
 		return (
